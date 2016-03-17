@@ -1,9 +1,4 @@
 <resources>
     <string name="app_name">MysteryApp</string>
 
-    <string-array name="products">
-        <item name="iMac">@drawable/imac</item>
-        <item name="macBookPro">@drawable/macbookpro</item>
-        <item name="iPhone">@drawable/iphone</item>
-    </string-array>
 </resources>

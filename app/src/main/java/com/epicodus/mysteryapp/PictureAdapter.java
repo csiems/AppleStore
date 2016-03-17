@@ -3,6 +3,7 @@ package com.epicodus.mysteryapp;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.media.Image;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,37 +15,35 @@ import com.squareup.picasso.Picasso;
  */
 
 
-public class PictureAdapter extends ArrayAdapter<Image> {
+public class PictureAdapter extends ArrayAdapter {
+    private Context context;
+    private LayoutInflater inflater;
 
-    private Context mContext;
-    private TypedArray mProducts;
+    private Integer[] imageUrls;
 
+    public PictureAdapter(Context context, Integer[] imageUrls) {
+        super(context, R.layout.gridview_item_image, imageUrls);
 
-    public PictureAdapter (Context context, TypedArray products) {
-        super(context, 0);
-        this.mContext = context;
-        this.mProducts = products;
+        this.context = context;
+        this.imageUrls = imageUrls;
+
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-
-        if (convertView == null) {
-            imageView = new ImageView(mContext);
-        } else {
-            imageView = (ImageView) convertView;
+        if (null == convertView) {
+            convertView = inflater.inflate(R.layout.gridview_item_image, parent, false);
         }
 
-        Picasso.with(mContext)
-                .load(mProducts.getResourceId(position, 0))
-                .noFade().resize(150, 150)
-                .centerCrop()
-                .into(imageView);
-        return imageView;
+        Picasso
+                .with(context)
+                .load(imageUrls[position])
+                .fit() // will explain later
+                .into((ImageView) convertView);
+
+        return convertView;
     }
-
-
 }
 
 
